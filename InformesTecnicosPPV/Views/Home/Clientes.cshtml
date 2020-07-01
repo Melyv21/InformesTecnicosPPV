@@ -1,0 +1,60 @@
+﻿@model List<InformesTecnicosPPV.Models.ViewModel.ListTablaViewModel>
+@{
+    ViewBag.Title = "";
+}
+<style>
+    .input-group .form-control {
+        float: right;
+    }
+</style>
+
+<br />
+<br />
+<div class="panel panel-success">
+    <div class="panel-heading">ADMINISTRACIÓN DE CLIENTES</div>
+    <div class="panel-body">
+        <div class="input-group">
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Razon Social</th>
+                        <th>Nombre de Fantasia</th>
+                        <th>Dirección</th>
+                        <th>Cuit</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Responsable</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                    @foreach (var oElemento in Model)
+                    {
+                        <tr>
+                            <td>@oElemento.RazonSocial</td>
+                            <td>@oElemento.NombreFantasia</td>
+                            <td>@oElemento.Direccion</td>
+                            <td>@oElemento.Cuit</td>
+                            <td>@oElemento.Telefono</td>
+                            <td>@oElemento.Email</td>
+                            <td>@oElemento.Responsable</td>
+                            <td>
+                                <a class="btn btn-warning" href="~/Home/Editar/@oElemento.id" data-toggle="tooltip" data-placement="top" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a class="btn btn-danger" href="~/Home/Eliminar/@oElemento.id" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        </tr>
+
+                    }
+            </table>
+        </div>
+    </div>
+
+</div>
+<div class="row" style="text-align:right;padding: 0px 15px;">
+    <a href="~/Home/Nuevo" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nuevo Cliente</a>
+</div>
+

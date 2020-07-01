@@ -1,0 +1,68 @@
+﻿@model InformesTecnicosPPV.Models.ViewModel.TablaViewModel
+@{
+    ViewBag.Title = "Nuevo Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Nuevo", "Home", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+
+                <div>
+                    @Html.LabelFor(d => d.RazonSocial)
+                    @Html.TextBoxFor(d => d.RazonSocial, "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.RazonSocial, null, new { @class = "red" })
+                </div>
+                <div>
+                    @Html.LabelFor(d => d.NombreFantasia)
+                    @Html.TextBoxFor(d => d.NombreFantasia, "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.NombreFantasia, null, new { @class = "red" })
+                </div>
+                <div>
+                    @Html.LabelFor(d => d.Direccion)
+                    @Html.TextBoxFor(d => d.Direccion, "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Direccion, null, new { @class = "red" })
+                </div>
+                <div>
+                    @Html.LabelFor(d => d.Cuit)
+                    @Html.TextBoxFor(d => d.Cuit, "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Cuit, null, new { @class = "red" })
+                </div>
+                <div>
+                    @Html.LabelFor(d => d.Telefono)
+                    @Html.TextBoxFor(d => d.Telefono, "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Telefono, null, new { @class = "red" })
+                </div>
+                <div>
+                    @Html.LabelFor(d => d.Email)
+                    @Html.TextBoxFor(d => d.Email, "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Email, null, new { @class = "red" })
+                </div>
+                <div>
+                    @Html.LabelFor(d => d.Responsable)
+                    @Html.TextBoxFor(d => d.Responsable, "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Responsable, null, new { @class = "red" })
+                </div>
+                <div>
+                    @Html.LabelFor(d => d.Fecha)<br />
+                    @Html.EditorFor(d => d.Fecha, "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Fecha, null, new { @class = "red" })
+                </div>
+                <br />
+                <div style="text-align:right;">
+
+                    <input value="Guardar" class="btn btn-primary" type="submit" />
+                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='@Url.Action("Index","Home")';" />
+                </div>
+            }
+        </div>
+
+    </div>
+
+
