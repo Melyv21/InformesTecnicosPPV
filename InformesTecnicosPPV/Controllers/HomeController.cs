@@ -1,10 +1,10 @@
 ﻿using InformesTecnicosPPV.Filters;
 using InformesTecnicosPPV.Models;
 using InformesTecnicosPPV.Models.ViewModel;
+using InformesTecnicosPPV.Models.ViewModelInformes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InformesTecnicosPPV.Controllers
@@ -41,9 +41,10 @@ namespace InformesTecnicosPPV.Controllers
                            Responsable = d.Responsable
                         
                        }).ToList();
+                
             }
 
-            return View(lst);
+            return View(lst);         
 
         }
 
@@ -158,7 +159,7 @@ namespace InformesTecnicosPPV.Controllers
                 db.Cliente.Remove(oCliente);
                 db.SaveChanges();
             }
-            return Redirect("~/Home/");
+            return Redirect("~/Home/Clientes");
         }
 
         //public ActionResult Buscar( string filtro)
@@ -182,10 +183,138 @@ namespace InformesTecnicosPPV.Controllers
         [AuthorizeUser(idOperacion: 3)]
         public ActionResult InformesTecnicos()
         {
-            
+
+            List<ListTablaViewModelInformes> lst;
+            using (InformesTecnicosDBEntities db = new InformesTecnicosDBEntities())
+            {
+                lst = (from i in db.Informes
+                       select new ListTablaViewModelInformes
+                       {
+                           Id = i.Id,
+                           NombreInforme = i.NombreInforme,
+                           Fecha = i.Fecha,
+                           Vencimiento = i.Vencimiento,
+                           Manual = i.Manual,
+                           FileName = i.FileName,
+                           ContentType = i.ContentType,
+                           IdCliente = i.IdCliente
+
+
+                       }).ToList();
+
+                return View(lst);
+            }
+
+        }
+
+        //CARGA DE INFORMES TECNICOS
+        public ActionResult CargarInforme()
+        {
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult CargarInforme(TablaViewModelInformes model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (InformesTecnicosDBEntities db = new InformesTecnicosDBEntities())
+                    {
+                        var oInforme = new Informes();
+                        oInforme.Fecha = model.Fecha;
+                        oInforme.Vencimiento = model.Vencimiento;
+                        oInforme.ContentType = model.ContentType;
+                        oInforme.NombreInforme = model.NombreInforme;
+                        oInforme.TipoInforme = model.TipoInforme;
+                        //oInforme.Cliente = model.Cliente.RazonSocial;
+
+                        db.Informes.Add(oInforme);
+                        db.SaveChanges();
+                    }
+
+                    return Redirect("~/Home/");
+                }
+
+                return View(model);
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.InnerException.Message);
+            }
+        }
+
+        //EDICION DE INFORMES
+        public ActionResult EditarInforme(int Id)
+        {
+            TablaViewModelInformes model = new TablaViewModelInformes();
+            using (InformesTecnicosDBEntities db = new InformesTecnicosDBEntities())
+            {
+                var oInforme = db.Informes.Find(Id);
+                model.NombreInforme = oInforme.NombreInforme;
+                model.TipoInforme = oInforme.TipoInforme;
+                model.Fecha = oInforme.Fecha;
+                model.Vencimiento = oInforme.Vencimiento;
+                model.Cliente = oInforme.Cliente;
+                model.ContentType = oInforme.ContentType;
+                model.Id = oInforme.Id;
+                model.Fecha = oInforme.Fecha;
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditarInforme(TablaViewModelInformes model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (InformesTecnicosDBEntities db = new InformesTecnicosDBEntities())
+                    {
+                        var oInforme = db.Informes.Find(model.Id);
+                        oInforme.NombreInforme = model.NombreInforme;
+                        oInforme.Fecha = model.Fecha;
+                        oInforme.TipoInforme = model.TipoInforme;
+                        oInforme.Vencimiento = model.Vencimiento;
+                        oInforme.ContentType = model.ContentType;
+                        oInforme.Cliente = model.Cliente;
+
+                        db.Entry(oInforme).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    return Redirect("~/Home/");
+                }
+
+                return View(model);
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EliminarInforme(int Id)
+        {
+            using (InformesTecnicosDBEntities db = new InformesTecnicosDBEntities())
+            {
+
+                var oInforme = db.Informes.Find(Id);
+                db.Informes.Remove(oInforme);
+                db.SaveChanges();
+            }
+            return Redirect("~/Home/InformesTecnicos");
+        }
+
+
 
         #endregion
     }

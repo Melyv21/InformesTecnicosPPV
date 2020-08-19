@@ -120,6 +120,16 @@
       <End Role="Usuario" EntitySet="Usuario" />
     </AssociationSet>
     <EntitySet Name="Cliente" EntityType="InformesTecnicosDBModel.Cliente" />
+    <EntitySet Name="Informes" EntityType="InformesTecnicosDBModel.Informes" />
+    <EntitySet Name="TipoInforme" EntityType="InformesTecnicosDBModel.TipoInforme" />
+    <AssociationSet Name="FK_Informes_Cliente" Association="InformesTecnicosDBModel.FK_Informes_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Informes" EntitySet="Informes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TipoInforme_Informes" Association="InformesTecnicosDBModel.FK_TipoInforme_Informes">
+      <End Role="Informes" EntitySet="Informes" />
+      <End Role="TipoInforme" EntitySet="TipoInforme" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Cliente">
     <Key>
@@ -134,5 +144,54 @@
     <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Responsable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Fecha" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Informes" Relationship="InformesTecnicosDBModel.FK_Informes_Cliente" FromRole="Cliente" ToRole="Informes" />
   </EntityType>
+  <EntityType Name="Informes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreInforme" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha" Type="DateTime" Precision="3" />
+    <Property Name="Vencimiento" Type="DateTime" Precision="3" />
+    <Property Name="Manual" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="InformesTecnicosDBModel.FK_Informes_Cliente" FromRole="Informes" ToRole="Cliente" />
+    <NavigationProperty Name="TipoInforme" Relationship="InformesTecnicosDBModel.FK_TipoInforme_Informes" FromRole="Informes" ToRole="TipoInforme" />
+  </EntityType>
+  <EntityType Name="TipoInforme">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IdInforme" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Informes" Relationship="InformesTecnicosDBModel.FK_TipoInforme_Informes" FromRole="TipoInforme" ToRole="Informes" />
+  </EntityType>
+  <Association Name="FK_Informes_Cliente">
+    <End Type="InformesTecnicosDBModel.Cliente" Role="Cliente" Multiplicity="1" />
+    <End Type="InformesTecnicosDBModel.Informes" Role="Informes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Informes">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TipoInforme_Informes">
+    <End Type="InformesTecnicosDBModel.Informes" Role="Informes" Multiplicity="1" />
+    <End Type="InformesTecnicosDBModel.TipoInforme" Role="TipoInforme" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Informes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TipoInforme">
+        <PropertyRef Name="IdInforme" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

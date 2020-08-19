@@ -1,39 +1,54 @@
-﻿@{
-    ViewBag.Title = "Informes Tecnicos";
+﻿@model List<InformesTecnicosPPV.Models.ViewModelInformes.ListTablaViewModelInformes>
+@{
+    ViewBag.Title = " ";
 }
-<h2>@ViewBag.Title</h2>
 
+<br />
+<br />
+<div class="panel panel-success">
+    <div class="panel-heading">INFORMES TECNICOS</div>
+    <div class="panel-body">
+        <div class="input-group">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Informe</th>
+                        <th>Tipo de Informe</th>
+                        <th>Vencimiento Informe</th>
+                        @*<th>Archivo</th>*@
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                @foreach (var oElemento in Model)
+                    {
+                        <tr>
+                            <td>@oElemento.Fecha</td>
+                            <td>@oElemento.IdCliente</td>
+                            <td>@oElemento.NombreInforme</td>
+                            @*<td>@oElemento.TipoInforme</td>*@
+                            <td>@oElemento.Vencimiento</td>
+                            <td>@oElemento.ContentType</td>
+                            <td>
+                                <a class="btn btn-warning" href="~/Home/EditarInforme/@oElemento.Id" data-toggle="tooltip" data-placement="top" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a class="btn btn-danger" href="~/Home/EliminarInforme/@oElemento.Id" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="return confirm('¿Desea Eliminar el registro?');"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a class="btn btn-success" href="~/Home/Descargar/@oElemento.Id" data-toggle="tooltip" data-placement="top" title="Descargar"><span class="glyphicon glyphicon-download"></span></a>
+                            </td>
+                        </tr>
+
+
+                    }
+            </table>
+        </div>
+
+    </div>
+</div>
 <div class="row" style="text-align:right;padding: 0px 15px;">
     <a href="~/Home/CargarInforme" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Cargar Informe</a>
-</div>
-<br />
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Vencimiento</th>
-                    <th>Cliente</th>
-                    <th>Informe</th>
-                    <th>Tipo de Informe</th>
-                    <th>Descargar</th>
-                </tr>
-            </thead>
-            @*@foreach (var oElemento in Model)
-            {
-                <tr>
-                    <td>@oElemento.RazonSocial</td>
-                    <td>@oElemento.NombreFantasia</td>
-                    <td>@oElemento.Direccion</td>
-                    <td>@oElemento.Cuit</td>
-                    <td>@oElemento.Telefono</td>
-                    <td>@oElemento.Email</td>
-                    <td>@oElemento.Responsable</td>
-                </tr>
-
-            }*@
-        </table>
-    </div>
-
 </div>

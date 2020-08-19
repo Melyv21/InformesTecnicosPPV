@@ -154,6 +154,9 @@
     <Compile Include="Models\Cliente.cs">
       <DependentUpon>AD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Informes.cs">
+      <DependentUpon>AD.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Modulo.cs">
       <DependentUpon>AD.tt</DependentUpon>
     </Compile>
@@ -166,9 +169,14 @@
     <Compile Include="Models\Rol_Operacion.cs">
       <DependentUpon>AD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TipoInforme.cs">
+      <DependentUpon>AD.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Usuario.cs">
       <DependentUpon>AD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModelInformes\ListTablaViewModelInformes.cs" />
+    <Compile Include="Models\ViewModelInformes\TablaViewModelInformes.cs" />
     <Compile Include="Models\ViewModel\ListTablaViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -236,6 +244,8 @@
     <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
     <Content Include="Views\Home\Nuevo.cshtml" />
     <Content Include="Views\Home\Editar.cshtml" />
+    <Content Include="Views\Home\CargarInforme.cshtml" />
+    <Content Include="Views\Home\EditarInforme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

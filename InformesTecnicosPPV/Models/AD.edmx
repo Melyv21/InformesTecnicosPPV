@@ -19,6 +19,19 @@
           <Property Name="Responsable" Type="varchar" MaxLength="50" />
           <Property Name="Fecha" Type="datetime" />
         </EntityType>
+        <EntityType Name="Informes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreInforme" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Vencimiento" Type="datetime" />
+          <Property Name="Manual" Type="image" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Modulo">
           <Key>
             <PropertyRef Name="Id" />
@@ -49,6 +62,14 @@
           <Property Name="IdRol" Type="int" Nullable="false" />
           <Property Name="IdOperacion" Type="int" />
         </EntityType>
+        <EntityType Name="TipoInforme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="IdInforme" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="Id" />
@@ -60,6 +81,18 @@
           <Property Name="Fecha" Type="datetime" />
           <Property Name="IdRol" Type="int" />
         </EntityType>
+        <Association Name="FK_Informes_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Informes" Type="Self.Informes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Informes">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Operaciones_Modulo">
           <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
           <End Role="Operaciones" Type="Self.Operaciones" Multiplicity="*" />
@@ -96,6 +129,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TipoInforme_Informes">
+          <End Role="Informes" Type="Self.Informes" Multiplicity="1" />
+          <End Role="TipoInforme" Type="Self.TipoInforme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Informes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TipoInforme">
+              <PropertyRef Name="IdInforme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_Rol">
           <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -110,11 +155,17 @@
         </Association>
         <EntityContainer Name="InformesTecnicosDBModelStoreContainer">
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Informes" EntityType="Self.Informes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Operaciones" EntityType="Self.Operaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol_Operacion" EntityType="Self.Rol_Operacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoInforme" EntityType="Self.TipoInforme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Informes_Cliente" Association="Self.FK_Informes_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Informes" EntitySet="Informes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Operaciones_Modulo" Association="Self.FK_Operaciones_Modulo">
             <End Role="Modulo" EntitySet="Modulo" />
             <End Role="Operaciones" EntitySet="Operaciones" />
@@ -126,6 +177,10 @@
           <AssociationSet Name="FK_Rol_Operacion_Rol" Association="Self.FK_Rol_Operacion_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Rol_Operacion" EntitySet="Rol_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoInforme_Informes" Association="Self.FK_TipoInforme_Informes">
+            <End Role="Informes" EntitySet="Informes" />
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
           </AssociationSet>
           <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
             <End Role="Rol" EntitySet="Rol" />
@@ -256,6 +311,16 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <EntitySet Name="Cliente" EntityType="InformesTecnicosDBModel.Cliente" />
+          <EntitySet Name="Informes" EntityType="InformesTecnicosDBModel.Informes" />
+          <EntitySet Name="TipoInforme" EntityType="InformesTecnicosDBModel.TipoInforme" />
+          <AssociationSet Name="FK_Informes_Cliente" Association="InformesTecnicosDBModel.FK_Informes_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Informes" EntitySet="Informes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoInforme_Informes" Association="InformesTecnicosDBModel.FK_TipoInforme_Informes">
+            <End Role="Informes" EntitySet="Informes" />
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Cliente">
           <Key>
@@ -270,7 +335,56 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Responsable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Informes" Relationship="InformesTecnicosDBModel.FK_Informes_Cliente" FromRole="Cliente" ToRole="Informes" />
         </EntityType>
+        <EntityType Name="Informes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreInforme" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Vencimiento" Type="DateTime" Precision="3" />
+          <Property Name="Manual" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="InformesTecnicosDBModel.FK_Informes_Cliente" FromRole="Informes" ToRole="Cliente" />
+          <NavigationProperty Name="TipoInforme" Relationship="InformesTecnicosDBModel.FK_TipoInforme_Informes" FromRole="Informes" ToRole="TipoInforme" />
+        </EntityType>
+        <EntityType Name="TipoInforme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdInforme" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Informes" Relationship="InformesTecnicosDBModel.FK_TipoInforme_Informes" FromRole="TipoInforme" ToRole="Informes" />
+        </EntityType>
+        <Association Name="FK_Informes_Cliente">
+          <End Type="InformesTecnicosDBModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="InformesTecnicosDBModel.Informes" Role="Informes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Informes">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoInforme_Informes">
+          <End Type="InformesTecnicosDBModel.Informes" Role="Informes" Multiplicity="1" />
+          <End Type="InformesTecnicosDBModel.TipoInforme" Role="TipoInforme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Informes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TipoInforme">
+              <PropertyRef Name="IdInforme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -334,6 +448,29 @@
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="NombreFantasia" ColumnName="NombreFantasia" />
                 <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Informes">
+            <EntityTypeMapping TypeName="InformesTecnicosDBModel.Informes">
+              <MappingFragment StoreEntitySet="Informes">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Manual" ColumnName="Manual" />
+                <ScalarProperty Name="Vencimiento" ColumnName="Vencimiento" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="NombreInforme" ColumnName="NombreInforme" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoInforme">
+            <EntityTypeMapping TypeName="InformesTecnicosDBModel.TipoInforme">
+              <MappingFragment StoreEntitySet="TipoInforme">
+                <ScalarProperty Name="IdInforme" ColumnName="IdInforme" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

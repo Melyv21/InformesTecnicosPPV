@@ -12,25 +12,25 @@ namespace InformesTecnicosPPV.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cliente
+    public partial class Informes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cliente()
+        public Informes()
         {
-            this.Informes = new HashSet<Informes>();
+            this.TipoInforme = new HashSet<TipoInforme>();
         }
     
         public int Id { get; set; }
-        public string RazonSocial { get; set; }
-        public string NombreFantasia { get; set; }
-        public string Direccion { get; set; }
-        public string Cuit { get; set; }
-        public string Telefono { get; set; }
-        public string Email { get; set; }
-        public string Responsable { get; set; }
+        public string NombreInforme { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
+        public Nullable<System.DateTime> Vencimiento { get; set; }
+        public byte[] Manual { get; set; }
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public int IdCliente { get; set; }
     
+        public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Informes> Informes { get; set; }
+        public virtual ICollection<TipoInforme> TipoInforme { get; set; }
     }
 }

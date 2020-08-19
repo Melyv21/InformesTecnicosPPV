@@ -15,6 +15,10 @@
         <AssociationConnector Association="InformesTecnicosDBModel.FK_Rol_Operacion_Rol" ManuallyRouted="false" />
         <AssociationConnector Association="InformesTecnicosDBModel.FK_Usuario_Rol" ManuallyRouted="false" />
         <EntityTypeShape EntityType="InformesTecnicosDBModel.Cliente" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="InformesTecnicosDBModel.Informes" Width="1.5" PointX="7.625" PointY="0.75" />
+        <EntityTypeShape EntityType="InformesTecnicosDBModel.TipoInforme" Width="1.5" PointX="9.875" PointY="1.375" />
+        <AssociationConnector Association="InformesTecnicosDBModel.FK_Informes_Cliente" />
+        <AssociationConnector Association="InformesTecnicosDBModel.FK_TipoInforme_Informes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

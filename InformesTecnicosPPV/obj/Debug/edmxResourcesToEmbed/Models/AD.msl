@@ -62,5 +62,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Informes">
+      <EntityTypeMapping TypeName="InformesTecnicosDBModel.Informes">
+        <MappingFragment StoreEntitySet="Informes">
+          <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Manual" ColumnName="Manual" />
+          <ScalarProperty Name="Vencimiento" ColumnName="Vencimiento" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="NombreInforme" ColumnName="NombreInforme" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoInforme">
+      <EntityTypeMapping TypeName="InformesTecnicosDBModel.TipoInforme">
+        <MappingFragment StoreEntitySet="TipoInforme">
+          <ScalarProperty Name="IdInforme" ColumnName="IdInforme" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

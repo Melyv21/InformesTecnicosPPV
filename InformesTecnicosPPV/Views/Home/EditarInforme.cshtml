@@ -1,0 +1,58 @@
+﻿@model InformesTecnicosPPV.Models.ViewModelInformes.TablaViewModelInformes
+@{
+    ViewBag.Title = "EditarInforme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("EditarInforme", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            @Html.AntiForgeryToken()
+            <div class="col-lg-5">
+                @Html.LabelFor(d => d.NombreInforme)
+                @Html.TextBoxFor(d => d.NombreInforme, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.NombreInforme, null, new { @class = "red" })
+            </div>
+            <div class="col-lg-5">
+                @Html.LabelFor(d => d.TipoInforme)
+                @Html.TextBoxFor(d => d.TipoInforme, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.TipoInforme, null, new { @class = "red" })
+            </div>
+            <div class="col-lg-5">
+                @Html.LabelFor(d => d.Cliente)
+                @Html.TextBoxFor(d => d.Cliente, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.Cliente, null, new { @class = "red" })
+            </div>
+            <div class="col-lg-5">
+                @Html.LabelFor(d => d.Fecha)
+                @Html.EditorFor(d => d.Fecha, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.Fecha, null, new { @class = "red" })
+            </div>
+            <div class="col-lg-5">
+                @Html.LabelFor(d => d.ContentType)
+                @Html.TextBoxFor(d => d.ContentType, "", new { type = "file" })
+                @Html.ValidationMessageFor(d => d.ContentType, null, new { @class = "red" })
+            </div>
+            <div class="col-lg-5">
+                @Html.LabelFor(d => d.Vencimiento)
+                @Html.EditorFor(d => d.Vencimiento, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.Vencimiento, null, new { @class = "red" })
+            </div>
+            <br />
+            <br />
+            <br />
+            <div style="text-align:right;" class="col-lg-10">
+
+                <input value="Guardar" class="btn btn-primary" type="submit" onclick="location.href='@Url.Action("InformesTecnicos","Home")';" />
+                <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='@Url.Action("InformesTecnicos","Home")';" />
+            </div>
+        }
+    </div>
+
+</div>
+
+

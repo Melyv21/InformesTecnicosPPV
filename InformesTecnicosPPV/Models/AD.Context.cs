@@ -31,5 +31,7 @@ namespace InformesTecnicosPPV.Models
         public virtual DbSet<Rol_Operacion> Rol_Operacion { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<Informes> Informes { get; set; }
+        public virtual DbSet<TipoInforme> TipoInforme { get; set; }
     }
 }
