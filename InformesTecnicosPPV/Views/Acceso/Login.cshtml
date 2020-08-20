@@ -18,20 +18,30 @@
         align-content:center;
     }
 
-    .container {
+    /*.container {
         padding-right: 15px;
         padding-left: 15px;
         margin-right: auto;
         margin-left: auto;
+    }*/
+    .login {
+        position: absolute;
+        top: calc(50% - 75px);
+        left: calc(50% - 50px);
+        height: 150px;
+        width: 350px;
+        padding: 10px;
+        z-index: 2;
     }
+
 </style>
 
     
 <body>
-    @*<div class="container">*@
-        <div class="danger" role="alert">
-            @ViewBag.Error
-        </div>
+    @*<div class="danger" role="alert">
+        @ViewBag.Error
+    </div>*@
+    <div class="login">
         <form action="@Url.Content("~/Acceso/Login")" method="post">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Usuario</label>
@@ -61,5 +71,5 @@
                 </div>
             </div>
         </form>
-    @*</div>*@
+    </div>
 </body>
