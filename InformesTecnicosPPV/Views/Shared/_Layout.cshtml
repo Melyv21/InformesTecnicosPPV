@@ -8,25 +8,27 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="~/Home/Index">
-                    <img alt="mdg" width="70" height="30" src="~/Images/Logo.PNG" />
-                </a>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="~/Home/Index">
+                        <img alt="mdg" width="30%" src="~/Images/Logo.PNG" />
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Administración de Clientes", "Clientes", "Home")</li>
+                        <li>@Html.ActionLink("Informes Técnicos", "InformesTecnicos", "Home")</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="navbar-link text-dark" href="~/Acceso/Login"><span class="glyphicon glyphicon-user"></span> Salir</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Administración de Clientes", "Clientes", "Home")</li>
-                    <li>@Html.ActionLink("Informes Técnicos", "InformesTecnicos", "Home")</li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="~/Acceso/Login"><span class="glyphicon glyphicon-user"></span> Salir</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+        </nav>
+    </header>
     <div class="container body-content">
         @RenderBody()
         <hr />
